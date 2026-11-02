@@ -1,50 +1,303 @@
-<!doctype html>
+<!DOCTYPE html>
+
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#080711">
-  <meta name="description" content="IEDC Idea Sprint 2026 — a 24-hour student ideathon concept website.">
-  <title>IDEA SPRINT '26 | IEDC BOOTCAMP CEC</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="style.css">
-  <script src="script.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#080711">
+    <title>IEDC Idea Sprint 2026</title>
+   
+
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-<header class="header">
-  <a class="brand" href="#home"><span class="logo">IS<span>26</span></span><span>IEDC BOOTCAMP<br><small>CEC · INNOVATION STARTS HERE</small></span></a>
-  <button class="menu" aria-label="Toggle navigation" aria-expanded="false">☰</button>
-  <nav class="nav"><a href="#about">ABOUT</a><a href="#schedule">SCHEDULE</a><a href="#lab">IDEA LAB</a><a class="nav-cta" href="#register">REGISTER ↗</a></nav>
+    <!-- CYBERPUNK LOADING SCREEN -->
+<div id="loader">
+    <div class="loader-content">
+
+        <div class="loader-logo">
+            <div class="loader-ring ring-one"></div>
+            <div class="loader-ring ring-two"></div>
+
+            <span>IEDC</span>
+        </div>
+
+        <h2>IDEA SPRINT <span>2026</span></h2>
+
+        <p class="loader-message">
+            INITIALIZING INNOVATION...
+        </p>
+
+        <div class="loader-bar">
+            <div id="loader-progress"></div>
+        </div>
+
+        <p class="loader-percent" id="loader-percent">0%</p>
+
+    </div>
+</div>
+
+
+<div class="cursor-glow"></div>
+
+<header class="navbar">
+    <a href="#home" class="logo">IS<span>26</span></a>
+
+    <div class="brand">
+        <strong>IEDC BOOTCAMP</strong>
+        <small>CEC · INNOVATION STARTS HERE</small>
+    </div>
+
+    <nav>
+        <a href="#about">ABOUT</a>
+        <a href="#schedule">SCHEDULE</a>
+        <a href="#idea-lab">IDEA LAB</a>
+        <a href="#register" class="nav-button">REGISTER ↗</a>
+    </nav>
 </header>
+
 <main>
-<section class="hero wrap" id="home">
-  <div class="hero-copy">
-    <p class="eyebrow"><i></i> IEDC BOOTCAMP CEC PRESENTS</p>
-    <p class="micro">24 HOURS · ONE BIG IDEA · INFINITE POSSIBILITIES</p>
-    <h1>IDEA<br><span class="glitch" data-text="SPRINT">SPRINT</span><sup>'26</sup></h1>
-    <p class="intro">Big ideas don't wait. Bring your curiosity, find your people, and turn a bold thought into something real.</p>
-    <div class="actions"><a class="btn primary" href="#register">CLAIM YOUR SPOT <b>↗</b></a><a class="btn outline" href="#about">EXPLORE THE SPRINT ↓</a></div>
-    <div class="stats"><span>✳ <b>24 HOURS</b><small>BUILD & EXPLORE</small></span><span class="cyan">⌁ <b>STUDENT-LED</b><small>IDEAS INTO ACTION</small></span></div>
-  </div>
-  <div class="art" aria-label="Abstract neon geometric artwork"><div class="orbit o1"></div><div class="orbit o2"></div><div class="crystal"><span>i</span></div><div class="float-card top">▪ THINK DIFFERENT</div><div class="float-card bottom"><b>01</b> IDEA → IMPACT</div><span class="cross">+</span><small class="caption">FIG. 01 / THE SPARK</small></div>
-  <div class="countdown"><p><i></i> THE COUNTDOWN IS ON</p><div class="clock"><div><strong id="days">—</strong><small>DAYS</small></div><b>:</b><div><strong id="hours">—</strong><small>HOURS</small></div><b>:</b><div><strong id="minutes">—</strong><small>MINUTES</small></div><b>:</b><div><strong id="seconds">—</strong><small>SECONDS</small></div></div><small id="countdown-note">Event date will be announced soon.</small></div>
-  <div class="hero-foot"><span>01 / DREAM IT</span><span>02 / BUILD IT</span><span>03 / SHOW THE WORLD</span></div>
-</section>
-<section class="wrap section" id="about">
-  <p class="label">[ 01 — THE MISSION ]</p><div class="split"><h2>YOUR NEXT BIG<br>THING STARTS <em>HERE.</em></h2><div><p>Idea Sprint is a 24-hour student ideathon built for curious minds and fearless makers. Spot a problem, team up with fellow creators, and shape a solution worth sharing.</p><p class="muted">No perfect plan needed. Just curiosity, collaboration, and the courage to start.</p></div></div>
-  <div class="cards"><article><small>01 / DISCOVER</small><div class="symbol">⌕</div><h3>Find the problem</h3><p>Look closer at the world around you. The best ideas start with better questions.</p></article><article class="featured"><small>02 / COLLABORATE</small><div class="symbol">⌘</div><h3>Build your crew</h3><p>Mix skills, share perspectives, and make something stronger together.</p></article><article><small>03 / CREATE</small><div class="symbol">↗</div><h3>Make it matter</h3><p>Turn a rough concept into a clear pitch and your next step forward.</p></article></div>
-</section>
-<section class="schedule"><div class="wrap section" id="schedule"><p class="label">[ 02 — THE PLAN ]</p><div class="split"><h2>24 HOURS.<br><em>ZERO LIMITS.</em></h2><p>A draft timeline to get the energy flowing.<br><small class="muted">Final timings must be confirmed by the organisers.</small></p></div><div class="tabs"><button class="tab active" data-day="day1">DAY 01 <span>→ THE SPARK</span></button><button class="tab" data-day="day2">DAY 02 <span>→ THE SHOW</span></button></div><div id="timeline" class="timeline" aria-live="polite"></div></div></section>
-<section class="wrap section" id="lab"><p class="label">[ 03 — THE IDEA LAB ]</p><div class="lab"><div><p class="eyebrow">STUCK AT THE START?</p><h2>LET'S MAKE<br>SOME <em>SPARKS.</em></h2><p class="muted">Choose a theme and generate a tiny creative challenge. Use it as a starting point, then make it your own.</p><label class="label" for="theme">CHOOSE YOUR THEME</label><select id="theme"><option value="campus">Campus life</option><option value="planet">Planet & sustainability</option><option value="health">Health & wellbeing</option><option value="tech">Everyday technology</option></select><button class="btn primary" id="generate">GENERATE AN IDEA ✳</button></div><div class="idea-box"><p class="label">● RANDOM SPARK / <span id="spark-number">001</span></p><div class="symbol" id="idea-icon">✳</div><small>YOUR CHALLENGE</small><h3 id="idea-title">Make campus life a little easier.</h3><p id="idea-description">Find one everyday frustration students face and design a simple solution that could improve their day.</p><button class="text-btn" id="another">TRY ANOTHER ↻</button></div></div></section>
-<section class="register"><div class="wrap register-grid" id="register"><div><p class="label">[ 04 — YOUR MOVE ]</p><h2>HAVE AN IDEA?<br><em>LET'S HEAR IT.</em></h2><p class="muted">This demo validates your details in the browser. It does not send or store your information online.</p><div class="note">↳ Registration backend / official link to be added by organisers.</div></div>
-<form id="registration-form" novalidate><div class="form-top"><span>PARTICIPANT DETAILS</span><span>FORM / 01</span></div>
-<label for="full-name">FULL NAME <b>*</b></label><input id="full-name" name="fullName" required minlength="2" autocomplete="name" placeholder="Your name"><p class="error" id="name-error"></p>
-<label for="email">EMAIL ADDRESS <b>*</b></label><input id="email" name="email" type="email" required autocomplete="email" placeholder="you@example.com"><p class="error" id="email-error"></p>
-<label for="year">YEAR OF STUDY <b>*</b></label><select id="year" required><option value="">Choose your year</option><option>First year</option><option>Second year</option><option>Third year</option><option>Fourth year</option><option>Other</option></select><p class="error" id="year-error"></p>
-<label for="interest">WHAT ARE YOU EXCITED ABOUT? <b>*</b></label><select id="interest" required><option value="">Choose an interest</option><option>Ideation & problem solving</option><option>Design & prototyping</option><option>Technology & development</option><option>Pitching & storytelling</option><option>Meeting collaborators</option></select><p class="error" id="interest-error"></p>
-<label class="consent"><input type="checkbox" id="consent" required> I understand this is a demo form and my details won't be sent anywhere.</label><p class="error" id="consent-error"></p>
-<button class="btn primary submit" type="submit">VALIDATE MY DETAILS ↗</button><p id="form-message" role="status"></p></form></div></section>
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <p class="typing-line">
+    <span id="typing-text"></span>
+    <span class="typing-cursor">|</span>
+</p>
+            <p class="eyebrow"><span class="dot"></span> IEDC BOOTCAMP CEC PRESENTS</p>
+            <p class="subtitle">24 HOURS · ONE BIG IDEA · INFINITE POSSIBILITIES</p>
+
+            <h1 class="glitch" data-text="IDEA SPRINT">
+             IDEA <span>SPRINT</span><sup>'26</sup>
+            </h1>
+
+            <p class="description">
+                Big ideas don't wait. Bring your curiosity, find your people,
+                and turn a bold thought into something real.
+            </p>
+
+            <div class="hero-buttons">
+                <a href="#register" class="button primary">CLAIM YOUR SPOT ↗</a>
+                <a href="#about" class="button secondary">EXPLORE THE SPRINT ↓</a>
+            </div>
+        </div>
+
+        <div class="hero-art" aria-hidden="true">
+            <div class="orbit orbit-one"></div>
+            <div class="orbit orbit-two"></div>
+            <div class="crystal">✦</div>
+            <div class="floating-label label-top">▪ THINK DIFFERENT</div>
+            <div class="floating-label label-bottom">01 &nbsp; IDEA → IMPACT</div>
+            <p class="art-caption">FIG. 01 / THE SPARK</p>
+        </div>
+    </section>
+
+    <section class="countdown section reveal" id="countdown">
+        <div id="event-status" class="event-status">
+    <span class="status-dot"></span>
+    <span id="status-text">EVENT STARTS IN...</span>
+</div>
+        <p class="eyebrow"><span class="dot"></span> THE COUNTDOWN IS ON</p>
+
+        <div class="timer">
+            <div><strong id="days">--</strong><span>DAYS</span></div>
+            <div><strong id="hours">--</strong><span>HOURS</span></div>
+            <div><strong id="minutes">--</strong><span>MINUTES</span></div>
+            <div><strong id="seconds">--</strong><span>SECONDS</span></div>
+        </div>
+
+        <p class="note" id="countdown-note">
+            Event date will be announced soon.
+        </p>
+    </section>
+
+    <section class="section reveal" id="about">
+        <p class="eyebrow">01 / THE MISSION</p>
+        <h2>Ideas are easy.<br><span>Making them real is the sprint.</span></h2>
+        <p class="section-description">
+            Bring your curiosity, collaborate with creative minds,
+            and explore solutions to real-world problems.
+        </p>
+
+        <div class="feature-grid">
+            <article class="feature-card">
+                <span class="feature-number">01</span>
+                <h3>THINK</h3>
+                <p>Question the ordinary and discover new possibilities.</p>
+            </article>
+
+            <article class="feature-card">
+                <span class="feature-number">02</span>
+                <h3>BUILD</h3>
+                <p>Work together and transform your idea into a concept.</p>
+            </article>
+
+            <article class="feature-card">
+                <span class="feature-number">03</span>
+                <h3>IMPACT</h3>
+                <p>Present your vision and explore how it can make a difference.</p>
+            </article>
+        </div>
+    </section>
+
+    <section class="section reveal" id="schedule">
+        <p class="eyebrow">02 / THE TIMELINE</p>
+        <h2>One sprint.<br><span>Two days of possibilities.</span></h2>
+
+        <p class="note">
+            The schedule below is a draft. Confirm timings with the organisers.
+        </p>
+
+        <div class="mission-timeline">
+
+
+<article class="mission-card reveal-left">
+    <div class="mission-marker">01</div>
+
+    <div class="mission-content">
+        <span class="day-tag">DAY 01 / THE SPARK</span>
+        <h3>INITIALIZE YOUR IDEAS</h3>
+
+        <div class="mission-event">
+            <span class="mission-time">09:00</span>
+            <span>Check-in and welcome</span>
+        </div>
+
+        <div class="mission-event">
+            <span class="mission-time">10:00</span>
+            <span>Problem discovery</span>
+        </div>
+
+        <div class="mission-event">
+            <span class="mission-time">12:00</span>
+            <span>Team brainstorming</span>
+        </div>
+
+        <div class="mission-event">
+            <span class="mission-time">14:00</span>
+            <span>Idea development</span>
+        </div>
+
+        <div class="mission-event">
+            <span class="mission-time">16:00</span>
+            <span>Mentor feedback</span>
+        </div>
+    </div>
+</article>
+
+<article class="mission-card reveal-right">
+    <div class="mission-marker cyan-marker">02</div>
+
+    <div class="mission-content">
+        <span class="day-tag cyan">DAY 02 / THE LAUNCH</span>
+        <h3>TURN IDEAS INTO IMPACT</h3>
+
+        <div class="mission-event">
+            <span class="mission-time cyan-time">09:00</span>
+            <span>Prototype refinement</span>
+        </div>
+
+        <div class="mission-event">
+            <span class="mission-time cyan-time">11:00</span>
+            <span>Presentation preparation</span>
+        </div>
+
+        <div class="mission-event">
+            <span class="mission-time cyan-time">13:00</span>
+            <span>Final demonstrations</span>
+        </div>
+
+        <div class="mission-event">
+            <span class="mission-time cyan-time">15:00</span>
+            <span>Evaluation</span>
+        </div>
+
+        <div class="mission-event">
+            <span class="mission-time cyan-time">16:00</span>
+            <span>Closing session</span>
+        </div>
+    </div>
+</article>
+
+
+</div>
+
+    </section>
+
+    <section class="section reveal" id="idea-lab">
+        <p class="eyebrow">03 / EXPERIMENT ZONE</p>
+        <h2>Stuck on an idea?<br><span>Let's spark something.</span></h2>
+        <p class="section-description">
+            Choose a theme and generate a creative project prompt.
+        </p>
+
+        <div class="idea-box">
+            <label for="theme">CHOOSE YOUR THEME</label>
+
+            <select id="theme">
+                <option value="campus">Smart Campus</option>
+                <option value="planet">Planet & Sustainability</option>
+                <option value="health">Health & Wellbeing</option>
+                <option value="technology">Future Technology</option>
+            </select>
+
+            <button type="button" class="button primary" id="generate">
+                GENERATE AN IDEA ✦
+            </button>
+
+            <div class="idea-result" id="idea-result" aria-live="polite">
+                Your next big idea starts here.
+            </div>
+        </div>
+    </section>
+
+    <section class="section reveal" id="register">
+        <p class="eyebrow">04 / YOUR NEXT CHAPTER</p>
+        <h2>Got an idea?<br><span>Let's hear it.</span></h2>
+
+        <form id="registration-form" class="registration-form">
+            <label for="name">YOUR NAME</label>
+            <input id="name" name="name" type="text"
+                   placeholder="Enter your full name" required minlength="2">
+
+            <label for="email">EMAIL ADDRESS</label>
+            <input id="email" name="email" type="email"
+                   placeholder="you@example.com" required>
+
+            <label for="team">TEAM NAME (OPTIONAL)</label>
+            <input id="team" name="team" type="text"
+                   placeholder="Give your team a name">
+
+            <label for="interest">AREA OF INTEREST</label>
+            <select id="interest" name="interest" required>
+                <option value="">Choose an area</option>
+                <option>Technology</option>
+                <option>Sustainability</option>
+                <option>Healthcare</option>
+                <option>Education</option>
+                <option>Other</option>
+            </select>
+
+            <button type="submit" class="button primary submit-button">
+                SUBMIT REGISTRATION ↗
+            </button>
+
+            <p id="form-message" aria-live="polite"></p>
+            <p class="note">
+                Demo form only. It does not send or store your information.
+            </p>
+        </form>
+    </section>
 </main>
-<footer><div class="wrap footer-main"><a class="brand" href="#home"><span class="logo">IS<span>26</span></span><span>IEDC BOOTCAMP<br><small>CEC · INNOVATION STARTS HERE</small></span></a><p>Built for the curious.<br><span class="muted">Made for what comes next.</span></p><div class="footer-links"><a href="#about">ABOUT</a><a href="#schedule">SCHEDULE</a><a href="#register">REGISTER</a><a href="https://www.instagram.com/" target="_blank" rel="noreferrer">INSTAGRAM ↗</a></div></div><div class="wrap footer-bottom"><span>© 2026 IEDC BOOTCAMP CEC · CONCEPT WEBSITE</span><a href="#home">BACK TO TOP ↑</a></div></footer>
-</body></html>
+
+<footer class="footer">
+    <a href="#home" class="logo">IS<span>26</span></a>
+    <p>IEDC BOOTCAMP CEC · INNOVATION STARTS HERE</p>
+    <a href="#home">BACK TO TOP ↑</a>
+    <small>© 2026 · IDEA SPRINT · EVENT DETAILS TO BE CONFIRMED</small>
+</footer>
+
+<script src="script.js"></script>
+
+
+</body>
+</html>
