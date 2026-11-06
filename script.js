@@ -486,6 +486,8 @@ document.addEventListener("pointermove", (event) => {
 
     const display = document.getElementById("game-display");
     const gameButtons = document.querySelectorAll("[data-game]");
+    const popup = document.getElementById("game-popup");
+    const popupClose = document.getElementById("game-popup-close");
 
     if (!display || gameButtons.length === 0) return;
 
@@ -496,20 +498,40 @@ document.addEventListener("pointermove", (event) => {
         clearInterval(quizTimer);
         currentGame++;
     }
+    function closeGamePopup() {
+    clearGame();
+    popup.classList.remove("active");
+}
+
+popupClose.addEventListener("click", closeGamePopup);
+
+popup.addEventListener("click", (event) => {
+    if (event.target === popup) {
+        closeGamePopup();
+    }
+});
+
+document.addEventListener("keydown", (event) => {
+    if (event.key === "Escape" && popup.classList.contains("active")) {
+        closeGamePopup();
+    }
+});
 
     gameButtons.forEach(button => {
-        button.addEventListener("click", () => {
+    button.addEventListener("click", () => {
 
-            clearGame();
+        clearGame();
 
-            const game = button.dataset.game;
+        popup.classList.add("active");
 
-            if (game === "brain") startBrainSprint();
-            if (game === "memory") startMemoryMatrix();
-            if (game === "code") startCodeBreaker();
+        const game = button.dataset.game;
 
-        });
+        if (game === "brain") startBrainSprint();
+        if (game === "memory") startMemoryMatrix();
+        if (game === "code") startCodeBreaker();
+
     });
+});
 
     /* =================================
        GAME 1: BRAIN SPRINT
@@ -1165,23 +1187,5 @@ window.addEventListener("scroll", () => {
     const progress = (scrollTop / scrollHeight) * 100;
 
     scrollProgress.style.width = progress + "%";
-
-});
-/* NEON CURSOR TRAIL */
-
-document.addEventListener("mousemove", (event) => {
-
-    const particle = document.createElement("div");
-
-    particle.className = "cursor-particle";
-
-    particle.style.left = event.clientX + "px";
-    particle.style.top = event.clientY + "px";
-
-    document.body.appendChild(particle);
-
-    setTimeout(() => {
-        particle.remove();
-    }, 600);
 
 });
