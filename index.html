@@ -11,6 +11,7 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <div class="scroll-progress" id="scroll-progress"></div>
     <!-- CYBERPUNK LOADING SCREEN -->
 <div id="loader">
     <div class="loader-content">
@@ -41,6 +42,7 @@
 <div class="cursor-glow"></div>
 
 <header class="navbar">
+    <a href="#games">GAME ZONE</a>
     <a href="#home" class="logo">IS<span>26</span></a>
 
     <div class="brand">
@@ -249,6 +251,81 @@
             </div>
         </div>
     </section>
+    <!-- GAME ZONE -->
+<section class="wrap section" id="games">
+
+    <p class="label">[ 04 — THE GAME ZONE ]</p>
+
+    <div class="split">
+        <h2>THINK FAST.<br><em>PLAY SMART.</em></h2>
+
+        <p>
+            Take a break from building ideas.
+            Challenge your brain with these innovation-inspired
+            mini games!
+        </p>
+    </div>
+
+    <!-- GAME CARDS -->
+    <div class="game-grid">
+
+        <!-- BRAIN SPRINT -->
+        <article class="game-card">
+            <div class="game-icon">🧠</div>
+            <small>GAME 01 / KNOWLEDGE</small>
+            <h3>BRAIN SPRINT</h3>
+            <p>
+                Test your knowledge with technology,
+                science and innovation questions.
+            </p>
+            <button class="btn primary game-btn" data-game="brain">
+                PLAY NOW ↗
+            </button>
+        </article>
+
+        <!-- MEMORY MATRIX -->
+        <article class="game-card">
+            <div class="game-icon">🟣</div>
+            <small>GAME 02 / MEMORY</small>
+            <h3>MEMORY MATRIX</h3>
+            <p>
+                Flip the cards, find matching pairs
+                and challenge your memory.
+            </p>
+            <button class="btn primary game-btn" data-game="memory">
+                PLAY NOW ↗
+            </button>
+        </article>
+
+        <!-- CODE BREAKER -->
+        <article class="game-card">
+            <div class="game-icon">💻</div>
+            <small>GAME 03 / LOGIC</small>
+            <h3>CODE BREAKER</h3>
+            <p>
+                Crack the secret four-digit code
+                using logic and clues.
+            </p>
+            <button class="btn primary game-btn" data-game="code">
+                PLAY NOW ↗
+            </button>
+        </article>
+
+    </div>
+
+    <!-- GAME DISPLAY AREA -->
+    <div class="game-display" id="game-display">
+
+        <div class="game-placeholder">
+            <span>✳</span>
+            <h3>READY PLAYER ONE?</h3>
+            <p>Select a game above to begin your challenge.</p>
+        </div>
+
+    </div>
+
+</section>
+<!-- END GAME ZONE -->
 
     <section class="section reveal" id="register">
         <p class="eyebrow">04 / YOUR NEXT CHAPTER</p>
@@ -296,8 +373,52 @@
     <small>© 2026 · IDEA SPRINT · EVENT DETAILS TO BE CONFIRMED</small>
 </footer>
 
-<script src="script.js"></script>
+<script src="script.js" defer></script>
 
+<!-- IEDC FAQ CHATBOT -->
 
+<div class="chatbot-container">
+
+    <button id="chatbot-toggle" class="chatbot-toggle">
+        ✦
+    </button>
+
+    <div class="chatbot-box" id="chatbot-box">
+
+        <div class="chatbot-header">
+            <div>
+                <h3>IEDC ASSISTANT</h3>
+                <span>● ONLINE · READY TO HELP</span>
+            </div>
+
+            <button id="chatbot-close">×</button>
+        </div>
+
+        <div class="chatbot-messages" id="chatbot-messages">
+
+            <div class="bot-message">
+                Hey there! 👋 Welcome to IDEA SPRINT '26!
+
+                I'm your IEDC virtual assistant.
+                What would you like to know?
+            </div>
+
+        </div>
+
+        <div class="chatbot-input-area">
+
+            <input
+                type="text"
+                id="chatbot-input"
+                placeholder="Ask me anything..."
+            >
+
+            <button id="chatbot-send">➤</button>
+
+        </div>
+
+    </div>
+
+</div>
 </body>
 </html>

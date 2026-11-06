@@ -85,23 +85,34 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Registration form validation
     const form = document.getElementById("registration-form");
-    const message = document.getElementById("form-message");
+const message = document.getElementById("form-message");
 
-    if (form && message) {
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
+if (form && message) {
 
-            if (!form.checkValidity()) {
-                form.reportValidity();
-                return;
-            }
+    form.addEventListener("submit", (event) => {
 
-            message.textContent =
-                "Demo submitted successfully! Your details have not been sent or stored.";
+        event.preventDefault();
 
-            form.reset();
-        });
-    }
+        if (!form.checkValidity()) {
+            form.reportValidity();
+            return;
+        }
+
+        message.classList.remove("success-animation");
+
+        message.textContent =
+            "✓ DEMO SUBMITTED SUCCESSFULLY! Your details have not been sent or stored.";
+
+        // Restart animation
+        void message.offsetWidth;
+
+        message.classList.add("success-animation");
+
+        form.reset();
+
+    });
+
+}
 
     // 3D crystal movement
     const crystal = document.querySelector(".crystal");
@@ -467,3 +478,710 @@ document.addEventListener("pointermove", (event) => {
 
     }, 100);
 })();
+/* =================================
+   IEDC IDEA SPRINT - GAME ZONE
+================================= */
+
+(() => {
+
+    const display = document.getElementById("game-display");
+    const gameButtons = document.querySelectorAll("[data-game]");
+
+    if (!display || gameButtons.length === 0) return;
+
+    let quizTimer = null;
+    let currentGame = 0;
+
+    function clearGame() {
+        clearInterval(quizTimer);
+        currentGame++;
+    }
+
+    gameButtons.forEach(button => {
+        button.addEventListener("click", () => {
+
+            clearGame();
+
+            const game = button.dataset.game;
+
+            if (game === "brain") startBrainSprint();
+            if (game === "memory") startMemoryMatrix();
+            if (game === "code") startCodeBreaker();
+
+        });
+    });
+
+    /* =================================
+       GAME 1: BRAIN SPRINT
+    ================================= */
+
+    const questions = [
+        {
+            question: "Which language is mainly used for web page structure?",
+            options: ["Python", "HTML", "C++", "Java"],
+            answer: "HTML"
+        },
+        {
+            question: "What does CPU stand for?",
+            options: [
+                "Central Processing Unit",
+                "Computer Personal Unit",
+                "Central Program Utility",
+                "Control Processing User"
+            ],
+            answer: "Central Processing Unit"
+        },
+        {
+            question: "Which one is an operating system?",
+            options: ["HTML", "CSS", "Linux", "JavaScript"],
+            answer: "Linux"
+        },
+        {
+            question: "Which data structure follows FIFO?",
+            options: ["Stack", "Queue", "Tree", "Graph"],
+            answer: "Queue"
+        },
+        {
+            question: "What does AI stand for?",
+            options: [
+                "Artificial Intelligence",
+                "Automatic Internet",
+                "Advanced Interface",
+                "Applied Information"
+            ],
+            answer: "Artificial Intelligence"
+        }
+    ];
+
+    function startBrainSprint() {
+
+        let index = 0;
+        let score = 0;
+        let answered = false;
+
+        function showQuestion() {
+
+            if (index >= questions.length) {
+                display.innerHTML = `
+                    <h3>CHALLENGE COMPLETED!</h3>
+                    <p class="game-status">
+                        Your score: ${score} / 50
+                    </p>
+                    <button class="game-btn" id="retry-quiz">
+                        PLAY AGAIN ↻
+                    </button>
+                `;
+
+                document.getElementById("retry-quiz")
+                    .addEventListener("click", startBrainSprint);
+
+                return;
+            }
+
+            answered = false;
+
+            const q = questions[index];
+            let time = 15;
+
+            display.innerHTML = `
+                <h3>BRAIN SPRINT</h3>
+
+                <p class="game-status">
+                    QUESTION ${index + 1} / ${questions.length}
+                </p>
+
+                <h4>${q.question}</h4>
+
+                <p id="quiz-time">Time: ${time}s</p>
+
+                <div id="quiz-options">
+                    ${q.options.map(option => `
+                        <button class="game-option" data-answer="${option}">
+                            ${option}
+                        </button>
+                    `).join("")}
+                </div>
+
+                <p id="quiz-feedback" class="game-status"></p>
+            `;
+
+            const gameId = currentGame;
+
+            const optionButtons =
+                display.querySelectorAll("[data-answer]");
+
+            function answerQuestion(option) {
+
+                if (answered || gameId !== currentGame) return;
+
+                answered = true;
+                clearInterval(quizTimer);
+
+                if (option === q.answer) {
+                    score += 10;
+                    document.getElementById("quiz-feedback").textContent =
+                        "CORRECT! +10 POINTS";
+                } else {
+                    document.getElementById("quiz-feedback").textContent =
+                        "WRONG! Correct answer: " + q.answer;
+                }
+
+                optionButtons.forEach(btn => btn.disabled = true);
+
+                setTimeout(() => {
+                    if (gameId !== currentGame) return;
+                    index++;
+                    showQuestion();
+                }, 1200);
+            }
+
+            optionButtons.forEach(btn => {
+                btn.addEventListener("click", () => {
+                    answerQuestion(btn.dataset.answer);
+                });
+            });
+
+            quizTimer = setInterval(() => {
+
+                if (gameId !== currentGame || answered) return;
+
+                time--;
+
+                const timer = document.getElementById("quiz-time");
+
+                if (timer) timer.textContent = "Time: " + time + "s";
+
+                if (time <= 0) {
+                    answerQuestion("");
+                }
+
+            }, 1000);
+        }
+
+        showQuestion();
+    }
+
+    /* =================================
+       GAME 2: MEMORY MATRIX
+    ================================= */
+
+    function startMemoryMatrix() {
+
+        const symbols = [
+            "🚀", "💡", "⚡", "🎯",
+            "🌍", "🧠", "💻", "🔥"
+        ];
+
+        const cards = [...symbols, ...symbols]
+            .sort(() => Math.random() - 0.5);
+
+        let firstCard = null;
+        let secondCard = null;
+        let moves = 0;
+        let matches = 0;
+        let locked = false;
+
+        const gameId = currentGame;
+
+        display.innerHTML = `
+            <h3>MEMORY MATRIX</h3>
+            <p class="game-status">
+                Find all matching pairs!
+            </p>
+            <p id="memory-moves">Moves: 0</p>
+
+            <div id="memory-board"
+                style="
+                display:grid;
+                grid-template-columns:repeat(4,1fr);
+                gap:10px;
+                max-width:400px;
+                margin:20px auto;">
+            </div>
+
+            <p id="memory-status" class="game-status"></p>
+        `;
+
+        const board = document.getElementById("memory-board");
+
+        cards.forEach(symbol => {
+
+            const card = document.createElement("button");
+
+            card.textContent = "?";
+            card.className = "game-option";
+
+            card.style.fontSize = "24px";
+            card.style.padding = "20px 5px";
+
+            card.addEventListener("click", () => {
+
+                if (
+                    locked ||
+                    card === firstCard ||
+                    card.textContent !== "?" ||
+                    gameId !== currentGame
+                ) return;
+
+                card.textContent = symbol;
+
+                if (!firstCard) {
+                    firstCard = card;
+                    return;
+                }
+
+                secondCard = card;
+                moves++;
+
+                document.getElementById("memory-moves").textContent =
+                    "Moves: " + moves;
+
+                if (firstCard.textContent === secondCard.textContent) {
+
+                    firstCard.disabled = true;
+                    secondCard.disabled = true;
+
+                    firstCard = null;
+                    secondCard = null;
+
+                    matches++;
+
+                    if (matches === 8) {
+                        document.getElementById("memory-status").textContent =
+                            "YOU WON! Completed in " + moves + " moves!";
+                    }
+
+                } else {
+
+                    locked = true;
+
+                    setTimeout(() => {
+
+                        if (gameId !== currentGame) return;
+
+                        firstCard.textContent = "?";
+                        secondCard.textContent = "?";
+
+                        firstCard = null;
+                        secondCard = null;
+
+                        locked = false;
+
+                    }, 800);
+
+                }
+
+            });
+
+            board.appendChild(card);
+
+        });
+
+    }
+
+    /* =================================
+       GAME 3: CODE BREAKER
+    ================================= */
+
+    function startCodeBreaker() {
+
+        const secret = [];
+
+        while (secret.length < 4) {
+
+            const digit = Math.floor(Math.random() * 10);
+
+            if (!secret.includes(digit)) {
+                secret.push(digit);
+            }
+
+        }
+
+        let attempts = 8;
+
+        display.innerHTML = `
+            <h3>CODE BREAKER</h3>
+
+            <p class="game-status">
+                Crack the secret 4-digit code!
+            </p>
+
+            <p>Rules: Use four different digits. You have 8 attempts.</p>
+
+            <input
+                type="text"
+                id="code-input"
+                class="game-input"
+                maxlength="4"
+                placeholder="0000"
+                inputmode="numeric"
+            >
+
+            <button class="game-btn" id="guess-code">
+                SUBMIT ↗
+            </button>
+
+            <p id="code-status" class="game-status">
+                Attempts remaining: 8
+            </p>
+
+            <div id="code-history"></div>
+        `;
+
+        const input = document.getElementById("code-input");
+        const submit = document.getElementById("guess-code");
+        const status = document.getElementById("code-status");
+        const history = document.getElementById("code-history");
+
+        function makeGuess() {
+
+            const guess = input.value;
+
+            if (!/^\d{4}$/.test(guess) ||
+                new Set(guess).size !== 4) {
+
+                status.textContent =
+                    "Enter exactly 4 different digits!";
+
+                return;
+            }
+
+            const digits = guess.split("").map(Number);
+
+            let exact = 0;
+            let misplaced = 0;
+
+            digits.forEach((digit, index) => {
+
+                if (digit === secret[index]) {
+                    exact++;
+                } else if (secret.includes(digit)) {
+                    misplaced++;
+                }
+
+            });
+
+            attempts--;
+
+            history.innerHTML += `
+                <p>
+                    ${guess} —
+                    Correct position: ${exact},
+                    Wrong position: ${misplaced}
+                </p>
+            `;
+
+            if (exact === 4) {
+
+                status.textContent =
+                    "ACCESS GRANTED! YOU CRACKED THE CODE!";
+
+                submit.disabled = true;
+                input.disabled = true;
+
+            } else if (attempts === 0) {
+
+                status.textContent =
+                    "GAME OVER! Secret code: " + secret.join("");
+
+                submit.disabled = true;
+                input.disabled = true;
+
+            } else {
+
+                status.textContent =
+                    "Attempts remaining: " + attempts;
+
+            }
+
+            input.value = "";
+
+        }
+
+        submit.addEventListener("click", makeGuess);
+
+        input.addEventListener("keydown", event => {
+            if (event.key === "Enter") makeGuess();
+        });
+
+    }
+
+})();
+/* =================================
+   IEDC IDEA SPRINT FAQ ASSISTANT
+================================= */
+/* =================================
+   IEDC IDEA SPRINT FAQ ASSISTANT
+   UPGRADED VERSION
+================================= */
+
+(() => {
+
+    const toggle = document.getElementById("chatbot-toggle");
+    const box = document.getElementById("chatbot-box");
+    const close = document.getElementById("chatbot-close");
+    const send = document.getElementById("chatbot-send");
+    const input = document.getElementById("chatbot-input");
+    const messages = document.getElementById("chatbot-messages");
+
+    if (!toggle || !box || !close || !send || !input || !messages) return;
+
+    // OPEN AND CLOSE CHATBOT
+
+    toggle.addEventListener("click", () => {
+        box.classList.toggle("active");
+    });
+
+    close.addEventListener("click", () => {
+        box.classList.remove("active");
+    });
+
+
+    // FAQ DATABASE
+
+    const faq = [
+
+        {
+            keywords: ["idea sprint", "about the event", "what is this event"],
+            answer: "IDEA SPRINT '26 is a student ideathon concept presented by IEDC Bootcamp CEC. Its theme is innovation, creativity and turning ideas into action."
+        },
+
+        {
+            keywords: ["date", "when is the event", "event day"],
+            answer: "The planned event date is 15 November 2026. Please confirm the final date and timings with the IEDC Bootcamp CEC organizers."
+        },
+
+        {
+            keywords: ["duration", "how long", "24 hours"],
+            answer: "Idea Sprint is designed as a 24-hour ideathon experience where students explore problems, develop ideas and present solutions!"
+        },
+
+        {
+            keywords: ["register", "registration", "join", "sign up"],
+            answer: "You can explore the Register section on this website. Remember, the current registration form is only a demo and does not submit or store your details."
+        },
+
+        {
+            keywords: ["team", "group", "members", "collaborate"],
+            answer: "Idea Sprint encourages teamwork! Connect with other students, share your strengths and work together to develop an innovative idea. Confirm official team-size rules with the organizers."
+        },
+
+        {
+            keywords: ["schedule", "timing", "agenda", "plan"],
+            answer: "Visit the Schedule section to explore the two-day event plan. The timings currently displayed are illustrative and must be confirmed by the organizers."
+        },
+
+        {
+            keywords: ["idea lab", "generate idea", "creative idea"],
+            answer: "Visit the Idea Lab! Choose a theme such as Smart Campus, Sustainability, Health or Future Technology and generate a creative project prompt."
+        },
+
+        {
+            keywords: ["game zone", "games", "play", "mini games"],
+            answer: "Our Game Zone has three mini games: Brain Sprint, Memory Matrix and Code Breaker. Give them a try!"
+        },
+
+        {
+            keywords: ["iedc", "bootcamp"],
+            answer: "IEDC stands for Innovation and Entrepreneurship Development Centre. It encourages students to explore innovation, creativity and entrepreneurship."
+        },
+
+        {
+            keywords: ["who can participate", "eligibility", "students"],
+            answer: "This concept website is designed around student participation. Please check with IEDC Bootcamp CEC organizers for official eligibility requirements."
+        },
+
+        {
+            keywords: ["location", "venue", "where"],
+            answer: "The website is presented by IEDC Bootcamp CEC. Please contact the organizers for the confirmed event venue."
+        },
+
+        {
+            keywords: ["fee", "fees", "payment", "cost"],
+            answer: "Registration fees have not been confirmed on this concept website. Please contact the organizers for official details."
+        },
+
+        {
+            keywords: ["prize", "prizes", "winner", "award"],
+            answer: "Prize and award details have not been confirmed here. Please check with the IEDC organizers for official announcements."
+        },
+
+        {
+            keywords: ["contact", "help", "organizer"],
+            answer: "For official event information, contact the IEDC Bootcamp CEC organizers through their official communication channels."
+        },
+
+        {
+            keywords: ["thank", "thanks"],
+            answer: "You're welcome! Keep innovating, keep experimenting and keep creating! ✨"
+        },
+
+        {
+            keywords: ["hello", "hi", "hey"],
+            answer: "Heyyy! 👋 Welcome to IDEA SPRINT '26! What would you like to know?"
+        }
+
+    ];
+
+
+    // FIND THE BEST ANSWER
+
+    function getAnswer(question) {
+
+        const text = question.toLowerCase().trim();
+
+        let bestMatch = null;
+        let highestScore = 0;
+
+        faq.forEach(item => {
+
+            item.keywords.forEach(keyword => {
+
+                if (text.includes(keyword.toLowerCase())) {
+
+                    if (keyword.length > highestScore) {
+                        highestScore = keyword.length;
+                        bestMatch = item.answer;
+                    }
+
+                }
+
+            });
+
+        });
+
+        return bestMatch ||
+            "Hmm! I don't have an answer for that yet. Please contact the IEDC Bootcamp CEC organizers for more information. 💗";
+    }
+
+
+    // DISPLAY MESSAGES
+
+    function addMessage(text, className) {
+
+        const message = document.createElement("div");
+
+        message.className = className;
+        message.textContent = text;
+
+        messages.appendChild(message);
+
+        messages.scrollTop = messages.scrollHeight;
+
+    }
+
+
+    // SEND MESSAGE
+
+   function sendMessage() {
+
+    const question = input.value.trim();
+
+    if (!question) return;
+
+    addMessage(question, "user-message");
+
+    input.value = "";
+
+    // Create typing animation
+    const typing = document.createElement("div");
+
+    typing.className = "bot-message typing-indicator";
+    typing.innerHTML = "<span></span><span></span><span></span>";
+
+    messages.appendChild(typing);
+
+    messages.scrollTop = messages.scrollHeight;
+
+    setTimeout(() => {
+
+        typing.remove();
+
+        const answer = getAnswer(question);
+
+        addMessage(answer, "bot-message");
+
+    }, 1000);
+
+}
+
+
+    send.addEventListener("click", sendMessage);
+
+    input.addEventListener("keydown", event => {
+
+        if (event.key === "Enter") {
+            sendMessage();
+        }
+
+    });
+
+
+    // SUGGESTED QUESTIONS
+
+    const suggestions = [
+        "What is Idea Sprint?",
+        "When is the event?",
+        "How can I register?",
+        "What games are available?"
+    ];
+
+    const suggestionBox = document.createElement("div");
+
+    suggestionBox.className = "chatbot-quick-questions";
+
+    suggestions.forEach(question => {
+
+        const button = document.createElement("button");
+
+        button.className = "chatbot-suggestion";
+        button.textContent = question;
+
+        button.addEventListener("click", () => {
+
+            input.value = question;
+            sendMessage();
+
+        });
+
+        suggestionBox.appendChild(button);
+
+    });
+
+    messages.appendChild(suggestionBox);
+
+})();
+/* CYBERPUNK SCROLL PROGRESS */
+
+const scrollProgress = document.getElementById("scroll-progress");
+
+window.addEventListener("scroll", () => {
+
+    const scrollTop = window.scrollY;
+
+    const scrollHeight =
+        document.documentElement.scrollHeight - window.innerHeight;
+
+    const progress = (scrollTop / scrollHeight) * 100;
+
+    scrollProgress.style.width = progress + "%";
+
+});
+/* NEON CURSOR TRAIL */
+
+document.addEventListener("mousemove", (event) => {
+
+    const particle = document.createElement("div");
+
+    particle.className = "cursor-particle";
+
+    particle.style.left = event.clientX + "px";
+    particle.style.top = event.clientY + "px";
+
+    document.body.appendChild(particle);
+
+    setTimeout(() => {
+        particle.remove();
+    }, 600);
+
+});
